@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import axios from 'axios';
 import * as Location from 'expo-location';
-import { sendLocationData } from '../api/locationService'; // Import the API function
+import { sendLocationData } from './api/locationService'; // Import the API function
+const GOOGLE_API_KEY = process.env.EXPO_PUBLIC_GOOGLE_API_KEY; 
 
 const LocationComponent = () => {
     const [locationInfo, setLocationInfo] = useState<{
@@ -10,15 +11,17 @@ const LocationComponent = () => {
         address: string | null;
         loading: boolean;
         error: string | null;
+        studentId: number | null;
     }>({
         coords: null,
         address: null,
         loading: true,
-        error: null
+        error: null,
+        studentId: 1 // Replace with the Logic
     });
-
-    const GOOGLE_API_KEY = 'AIzaSyAi96ojM12x3lUqX42g--aG0lPHACR9BIE';
-    const WEB_APP_ENDPOINT = 'https://example.com/api/location'; // Replace with your web app endpoint
+    
+  
+    const SERVER_URL = 'https://87e89eab-95e5-4c0f-8192-7ee0196e1581-dev.e1-us-east-azure.choreoapis.dev/employee-mgmt-system/student-mgmt-server/v1.0/location'; 
 
     useEffect(() => {
         const getDeviceLocation = async () => {
@@ -46,15 +49,18 @@ const LocationComponent = () => {
                     coords: deviceLocation.coords,
                     address: address,
                     loading: false,
-                    error: null
+                    error: null,
+                    studentId: 1 // Replace with the Logic
                 });
 
                 // Send location data to the web app
+                const studentId = 1; // Replace with the Logic
                 await sendLocationData(
-                    WEB_APP_ENDPOINT,
+                    SERVER_URL,
                     deviceLocation.coords.longitude,
                     deviceLocation.coords.latitude,
-                    address
+                    address,
+                    studentId
                 );
 
             } catch (error) {
@@ -72,11 +78,16 @@ const LocationComponent = () => {
 
     const reverseGeocode = async (latitude: number, longitude: number) => {
         try {
-            if (!GOOGLE_API_KEY || GOOGLE_API_KEY === 'YOUR_API_KEY_HERE') {
-                throw new Error("Please provide a valid Google API key");
+            if (!GOOGLE_API_KEY) {
+                throw new Error("Please provide a valid Google API key in your .env file");
             }
 
-            const response = await axios.get(
+            interface GeocodeResponse {
+                status: string;
+                results: { formatted_address: string }[];
+            }
+
+            const response = await axios.get<GeocodeResponse>(
                 `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_API_KEY}`
             );
 

@@ -28,7 +28,9 @@
     "extra": {
       "eas": {
         "projectId": "b9396283-6803-4a93-b1a0-767bc5ce97fd"
-      }
+        
+      },
+      "GOOGLE_API_KEY": "AIzaSyC1Z2VwLVClw7WX-XYOIzJbN_a6WYauXOM"
     }
   }
 }
