@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "app",
-    "slug": "app",
+    "name": "Worky",
+    "slug": "worky-iytespjw7cjxfbeivckr",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -27,10 +27,8 @@
     },
     "extra": {
       "eas": {
-        "projectId": "b9396283-6803-4a93-b1a0-767bc5ce97fd"
-        
-      },
-      "GOOGLE_API_KEY": "AIzaSyC1Z2VwLVClw7WX-XYOIzJbN_a6WYauXOM"
-    }
+        "projectId": "68918df1-6996-488d-b93f-661552862402"
+      }    },
+    "owner": "sachintha_wso2"
   }
 }
